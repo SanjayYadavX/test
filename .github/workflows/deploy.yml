@@ -28,10 +28,6 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
-      - name: Print GitHub context
-        run: |
-          echo "${{ toJson(github) }}"
-
       - name: Print specific GitHub context values
         run: |
           echo "Repository: ${{ github.repository }}"
@@ -57,4 +53,8 @@ jobs:
         run: |
           echo "RUN_ID=${{ env.RUN_ID }}"
           echo "Environment=${{ env.Environment }}"
+
+      - name: Print GitHub context
+        run: |
+          echo "${{ toJson(env) }}"
   
