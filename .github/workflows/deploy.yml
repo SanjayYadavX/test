@@ -46,7 +46,7 @@ jobs:
 
           $Environment = "${{ github.event.inputs.environment || 'dev' }}"
           echo "Environment=$Environment" | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "${{github}}"
+          echo ${{github}}
 
       - name: Debug Environment Variables
         shell: pwsh
