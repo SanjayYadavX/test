@@ -12,9 +12,10 @@ on:
         required: true
         default: 'dev'
 
+run-name: "Test-release for build # ${{ github.event.inputs.run_id  || 'latest' }}" 
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -32,4 +33,24 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Fetch Latest Run ID
+        shell: pwsh
+        run: |
+          # $RUN_ID = "${{ github.event.inputs.run_id || 'latest' }}"
+          $RUN_ID = "${{ github.event.inputs.run_id }}"
+              if ($RUN_ID -eq "latest") {
+                $RUN_ID = ""
+              }
+          echo "RUN_ID=$RUN_ID" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+          $Environment = "${{ github.event.inputs.environment || 'dev' }}"
+          echo "Environment=$Environment" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "${github}""
+
+      - name: Debug Environment Variables
+        shell: pwsh
+        run: |
+          echo "RUN_ID=${{ env.RUN_ID }}"
+          echo "Environment=${{ env.Environment }}"
   
